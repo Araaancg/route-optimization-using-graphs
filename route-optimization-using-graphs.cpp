@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <utility> // for std::pair
 #include <unordered_map>
 
 using namespace std;
@@ -58,7 +59,26 @@ vector<vector<int>> createGraph() {
     return graph;
 }
 
-int main() {
+vector<tuple<string, list<string>>> DFS(const vector<vector<int>>& graph, const string& startCity, const string& endCity) {
+    vector<tuple<string, list<string>>> route;
+
+    vector<pair<string, vector<string>>> stack;
+    stack.push_back({ startCity, {startCity} });
+
+    cout << "Stack: ";
+    for (const auto& entry : stack) {
+        cout << "(" << entry.first << ", [";
+        for (const string& city : entry.second) {
+            cout << city;
+        }
+        cout << "]) ";
+    }
+    cout << "\n";
+
+    return route;
+}
+
+int main() {    
     vector<vector<int>> adjacencyMatrix = createGraph();
 
     // Display the adjacency matrix
@@ -69,6 +89,13 @@ int main() {
         }
         cout << endl;
     }
+
+    string startCity = "Madrid";
+    string endCity = "Caceres";
+
+    DFS(adjacencyMatrix, startCity, endCity);
+
+
 
     return 0;
 }
