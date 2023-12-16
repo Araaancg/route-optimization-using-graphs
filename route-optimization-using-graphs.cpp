@@ -1,101 +1,152 @@
 #include <iostream>
 #include <vector>
-#include <utility> // for std::pair
 #include <unordered_map>
+#include <unordered_set>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stack>
 
 using namespace std;
 
-const int MAX_CITIES = 10;  // to determine size of vector
+const int MAX_CITIES = 8;  // to determine size of vector
 
-// function to create an adjacency matrix for the given cities and distances
-vector<vector<int>> createGraph() {
-    // map city names to unique indices
+unordered_map<string, int> getCitiesNameIndex() {
     unordered_map<string, int> cityIndex;
-
-    vector<string> cities = { "Madrid", "Guadalajara", "Toledo", "Caceres", "Ciudad Real", "Jaen", "Salamanca", "Albacete" };
-
-    // initialize the adjacency matrix with all distances set to 0 -> no connection between cities
-    vector<vector<int>> graph(MAX_CITIES, vector<int>(MAX_CITIES));
-
-    // Assign unique indices to cities
+    vector<string> cities = { "MAD", "CIU", "SAL", "TOL", "ALB", "JAE", "GUA", "CAC" };
     for (int i = 0; i < cities.size(); ++i) {
         cityIndex[cities[i]] = i;
     }
+    return cityIndex;
+};
 
-    // Add distances to the adjacency matrix
-    graph[cityIndex["Madrid"]][cityIndex["Ciudad Real"]] = 100;
-    graph[cityIndex["Ciudad Real"]][cityIndex["Madrid"]] = 100;
+// function to create an adjacency matrix for the given cities and distances
+vector<vector<int>> createGraph() {
+    unordered_map<string, int> cityIndex = getCitiesNameIndex();
+    
 
-    graph[cityIndex["Ciudad Real"]][cityIndex["Salamanca"]] = 100;
-    graph[cityIndex["Salamanca"]][cityIndex["Ciudad Real"]] = 100;
+    vector<vector<int>> graph(MAX_CITIES, vector<int>(MAX_CITIES));
 
-    graph[cityIndex["Madrid"]][cityIndex["Toledo"]] = 80;
-    graph[cityIndex["Toledo"]][cityIndex["Madrid"]] = 80;
+    graph[cityIndex["MAD"]][cityIndex["CIU"]] = 100;
+    graph[cityIndex["CIU"]][cityIndex["MAD"]] = 100;
 
-    graph[cityIndex["Madrid"]][cityIndex["Salamanca"]] = 190;
-    graph[cityIndex["Salamanca"]][cityIndex["Madrid"]] = 190;
+    graph[cityIndex["CIU"]][cityIndex["SAL"]] = 100;
+    graph[cityIndex["SAL"]][cityIndex["CIU"]] = 100;
 
-    graph[cityIndex["Toledo"]][cityIndex["Albacete"]] = 150;
-    graph[cityIndex["Albacete"]][cityIndex["Toledo"]] = 150;
+    graph[cityIndex["MAD"]][cityIndex["TOL"]] = 80;
+    graph[cityIndex["TOL"]][cityIndex["MAD"]] = 80;
 
-    graph[cityIndex["Toledo"]][cityIndex["Jaén"]] = 180;
-    graph[cityIndex["Jaén"]][cityIndex["Toledo"]] = 180;
+    graph[cityIndex["MAD"]][cityIndex["SAL"]] = 190;
+    graph[cityIndex["SAL"]][cityIndex["MAD"]] = 190;
 
-    graph[cityIndex["Toledo"]][cityIndex["Ciudad Real"]] = 50;
-    graph[cityIndex["Ciudad Real"]][cityIndex["Toledo"]] = 50;
+    graph[cityIndex["TOL"]][cityIndex["ALB"]] = 150;
+    graph[cityIndex["ALB"]][cityIndex["TOL"]] = 150;
 
-    graph[cityIndex["Salamanca"]][cityIndex["Guadalajara"]] = 100;
-    graph[cityIndex["Guadalajara"]][cityIndex["Salamanca"]] = 100;
+    graph[cityIndex["TOL"]][cityIndex["JAE"]] = 180;
+    graph[cityIndex["JAE"]][cityIndex["TOL"]] = 180;
 
-    graph[cityIndex["Salamanca"]][cityIndex["Caceres"]] = 150;
-    graph[cityIndex["Caceres"]][cityIndex["Salamanca"]] = 150;
+    graph[cityIndex["TOL"]][cityIndex["CIU"]] = 50;
+    graph[cityIndex["CIU"]][cityIndex["TOL"]] = 50;
 
-    graph[cityIndex["Caceres"]][cityIndex["Jaen"]] = 150;
-    graph[cityIndex["Jaén"]][cityIndex["Caceres"]] = 150;
+    graph[cityIndex["SAL"]][cityIndex["GUA"]] = 100;
+    graph[cityIndex["GUA"]][cityIndex["SAL"]] = 100;
 
-    graph[cityIndex["Salamanca"]][cityIndex["Jaen"]] = 100;
-    graph[cityIndex["Jaen"]][cityIndex["Salamanca"]] = 100;
+    graph[cityIndex["SAL"]][cityIndex["CAC"]] = 150;
+    graph[cityIndex["CAC"]][cityIndex["SAL"]] = 150;
 
+    graph[cityIndex["CAC"]][cityIndex["JAE"]] = 150;
+    graph[cityIndex["JAE"]][cityIndex["CAC"]] = 150;
+
+    graph[cityIndex["SAL"]][cityIndex["JAE"]] = 100;
+    graph[cityIndex["JAE"]][cityIndex["SAL"]] = 100;
     return graph;
 }
 
-vector<tuple<string, list<string>>> DFS(const vector<vector<int>>& graph, const string& startCity, const string& endCity) {
-    vector<tuple<string, list<string>>> route;
-
-    vector<pair<string, vector<string>>> stack;
-    stack.push_back({ startCity, {startCity} });
-
-    cout << "Stack: ";
-    for (const auto& entry : stack) {
-        cout << "(" << entry.first << ", [";
-        for (const string& city : entry.second) {
-            cout << city;
+string getKeyFromValue(unordered_map<string, int> myMap, int value) {
+    for (auto& [key, val] : myMap) {
+        if (val == value) {
+            return key;
         }
-        cout << "]) ";
     }
-    cout << "\n";
+    return "";
+}
 
-    return route;
+void printStack(stack<string> myStack) {
+    stack<string> copyStack = myStack;
+    while (!copyStack.empty()) {
+        cout << copyStack.top() << " ";
+        copyStack.pop();
+    };
+    cout << endl;
+};
+
+int getRouteDistance(const vector<vector<int>>& graph, vector<string> route) {
+    unordered_map<string, int> cityIndex;
+    cityIndex = getCitiesNameIndex();
+    int distance = 0;
+
+    for (int i = 1; i < route.size(); i++) {
+        int twoCitiesDist = graph[cityIndex[route[i]]][cityIndex[route[i - 1]]];
+        distance += twoCitiesDist;
+    };
+
+    return distance;
+};
+
+
+vector<string> DFS(const vector<vector<int>>& graph, const string& origin, const string& destination) {
+
+    unordered_map<string, int> cityIndex;
+    cityIndex = getCitiesNameIndex();
+
+    unordered_set<string> visitedNodes;
+    stack<string> myStack;
+    vector<string> path;
+
+    myStack.push(origin);
+
+    while (!myStack.empty()) {
+        // printStack(myStack);
+        string node = myStack.top();
+        myStack.pop();
+        if (visitedNodes.find(node) == visitedNodes.end()) {
+            visitedNodes.insert(node);
+            path.push_back(node);
+            for (int i = 0; i < graph[cityIndex[node]].size(); i++) {
+                if (graph[cityIndex[node]][i] != 0) {
+                    string adjacentNode = getKeyFromValue(cityIndex, i);
+                    if (adjacentNode == destination) {
+                        path.push_back(adjacentNode);
+                        return path;
+                    };
+                    myStack.push(adjacentNode);
+                };
+            };
+        };
+    };
+    return {};
 }
 
 int main() {    
     vector<vector<int>> adjacencyMatrix = createGraph();
 
     // Display the adjacency matrix
-    cout << "Adjacency Matrix:" << endl;
+    /*cout << "adjacency matrix:" << endl;
     for (const auto& row : adjacencyMatrix) {
         for (int distance : row) {
             cout << distance << "\t";
         }
         cout << endl;
-    }
+    }*/
 
-    string startCity = "Madrid";
-    string endCity = "Caceres";
+    string startCity = "SAL";
+    string endCity = "ALB";
 
-    DFS(adjacencyMatrix, startCity, endCity);
-
-
+    vector<string> route = DFS(adjacencyMatrix, startCity, endCity);
+    for (int i = 0; i < route.size(); i++) {
+        cout << route[i] << ' ';
+    };
+    cout << endl;
+    cout << "distance covered: " << getRouteDistance(adjacencyMatrix, route) << endl;
 
     return 0;
 }
