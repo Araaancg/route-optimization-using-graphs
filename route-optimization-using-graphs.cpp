@@ -19,7 +19,6 @@ unordered_map<string, int> getCitiesNameIndex() {
     return cityIndex;
 };
 
-// function to create an adjacency matrix for the given cities and distances
 vector<vector<int>> createGraph() {
     unordered_map<string, int> cityIndex = getCitiesNameIndex();
     
@@ -93,38 +92,69 @@ int getRouteDistance(const vector<vector<int>>& graph, vector<string> route) {
 };
 
 
-vector<string> DFS(const vector<vector<int>>& graph, const string& origin, const string& destination) {
+//vector<string> DFS(const vector<vector<int>>& graph, const string& origin, const string& destination) {
+//
+//    unordered_map<string, int> cityIndex;
+//    cityIndex = getCitiesNameIndex();
+//
+//    unordered_set<string> visitedNodes;
+//    stack<string> myStack;
+//    vector<string> path;
+//
+//    myStack.push(origin);
+//
+//    while (!myStack.empty()) {
+//         printStack(myStack);
+//        string node = myStack.top();
+//        myStack.pop();
+//        if (visitedNodes.find(node) == visitedNodes.end()) {
+//            visitedNodes.insert(node);
+//            path.push_back(node);
+//            for (int i = 0; i < graph[cityIndex[node]].size(); i++) {
+//                if (graph[cityIndex[node]][i] != 0) {
+//                    string adjacentNode = getKeyFromValue(cityIndex, i);
+//                    if (adjacentNode == destination) {
+//                        path.push_back(adjacentNode);
+//                        return path;
+//                    };
+//                    myStack.push(adjacentNode);
+//                };
+//            };
+//        };
+//    };
+//    return {};
+//}
 
-    unordered_map<string, int> cityIndex;
-    cityIndex = getCitiesNameIndex();
+vector<vector<string>> DFS(unordered_map<string, int> cityIndex, const vector<vector<int>>& graph, const string& origin, const string& destination) {
 
-    unordered_set<string> visitedNodes;
-    stack<string> myStack;
-    vector<string> path;
-
-    myStack.push(origin);
+    vector<vector<string>> paths;
+    vector<string> path = { origin };
+    stack<vector<string>> myStack;
+    myStack.push(path);
 
     while (!myStack.empty()) {
-        // printStack(myStack);
-        string node = myStack.top();
+        path = myStack.top();
         myStack.pop();
-        if (visitedNodes.find(node) == visitedNodes.end()) {
-            visitedNodes.insert(node);
-            path.push_back(node);
+        string node = path.back();
+        if (node == destination) {
+            paths.push_back(path);
+        }
+        else {
             for (int i = 0; i < graph[cityIndex[node]].size(); i++) {
                 if (graph[cityIndex[node]][i] != 0) {
                     string adjacentNode = getKeyFromValue(cityIndex, i);
-                    if (adjacentNode == destination) {
-                        path.push_back(adjacentNode);
-                        return path;
+                    if (find(path.begin(), path.end(), adjacentNode) == path.end()) {
+                        vector<string> newPath = path;
+                        newPath.push_back(adjacentNode);
+                        myStack.push(newPath);
                     };
-                    myStack.push(adjacentNode);
                 };
             };
         };
     };
-    return {};
-}
+    return paths;
+};
+
 
 int main() {    
     vector<vector<int>> adjacencyMatrix = createGraph();
@@ -138,15 +168,27 @@ int main() {
         cout << endl;
     }*/
 
-    string startCity = "SAL";
-    string endCity = "ALB";
+    unordered_map<string, int> cityIndex;
+    cityIndex = getCitiesNameIndex();
 
-    vector<string> route = DFS(adjacencyMatrix, startCity, endCity);
-    for (int i = 0; i < route.size(); i++) {
-        cout << route[i] << ' ';
+    string startCity = "SAL";
+    string endCity = "MAD";
+
+
+    vector<vector<string>> routes = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
+
+    for (int i =0; i < routes.size(); i++) {
+        for (int j = 0; j < routes[i].size(); j++) {
+            if (j == routes[i].size() - 1) {
+                cout << routes[i][j];
+            }
+            else {
+                cout << routes[i][j] << " -> ";
+            }
+        };
+        cout << endl;
+        cout << "distance covered: " << getRouteDistance(adjacencyMatrix, routes[i]) << endl;
     };
-    cout << endl;
-    cout << "distance covered: " << getRouteDistance(adjacencyMatrix, route) << endl;
 
     return 0;
 }
