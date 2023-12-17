@@ -128,7 +128,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="dfs.cpp" />
+    <ClCompile Include="extra-funcs.cpp" />
+    <ClCompile Include="graph.cpp" />
     <ClCompile Include="route-optimization-using-graphs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dfs.h" />
+    <ClInclude Include="extra-funcs.h" />
+    <ClInclude Include="graph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
