@@ -131,7 +131,7 @@
     <ClCompile Include="dfs.cpp" />
     <ClCompile Include="extra-funcs.cpp" />
     <ClCompile Include="graph.cpp" />
-    <ClCompile Include="route-optimization-using-graphs.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dfs.h" />
