@@ -15,7 +15,6 @@ int getRouteDistance(const vector<vector<int>>& graph, vector<string> route, uno
     return distance;
 };
 
-
 //void printStack(stack<string> myStack) {
 //    stack<string> copyStack = myStack;
 //    while (!copyStack.empty()) {

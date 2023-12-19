@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include <stack>
 
-#include "graph.h"
-#include "extra-funcs.h"
-#include "dfs.h"
+#include "./headers/dfs.h"
+#include "./headers/extra-funcs.h"
+#include "./headers/graph.h"
 
 using namespace std;
 
@@ -27,13 +27,19 @@ int main() {
         cout << endl;
     }*/
 
-    string startCity = "SAL";
-    string endCity = "TOL";
+    string startCity = "MAD";
+    string endCity = "GUA";
 
 
-    vector<vector<string>> routes = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
+    vector<string> route = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
 
-    for (int i =0; i < routes.size(); i++) {
+    for (int i = 0; i < route.size(); i++) {
+        cout << route[i] << " "; 
+    }
+    cout << endl;
+    cout << "distance covered: " << getRouteDistance(adjacencyMatrix, route, cityIndex) << endl;
+
+    /*for (int i =0; i < routes.size(); i++) {
         for (int j = 0; j < routes[i].size(); j++) {
             if (j == routes[i].size() - 1) {
                 cout << routes[i][j];
@@ -44,7 +50,7 @@ int main() {
         };
         cout << endl;
         cout << "distance covered: " << getRouteDistance(adjacencyMatrix, routes[i], cityIndex) << endl;
-    };
+    };*/
 
     return 0;
 }
