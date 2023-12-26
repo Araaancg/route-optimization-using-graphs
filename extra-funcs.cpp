@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -41,3 +42,10 @@ unordered_map<string, int> mapCitiesWithIndex(vector<string>& allCities) {
     }
     return cityIndex;
 };
+
+void displayMenu(const vector<string>& cities, string title) {
+    cout << title << ": " << endl;
+    for (int i = 0; i < cities.size(); i++) {
+        std::cout << i + 1 << ". " << cities[i] << endl;
+    }
+}

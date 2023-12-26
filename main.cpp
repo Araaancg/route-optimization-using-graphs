@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <stack>
 
-#include "./headers/dfs.h"
-#include "./headers/extra-funcs.h"
-#include "./headers/graph.h"
+#include "dfs.h"
+#include "bfs.h"
+#include "extra-funcs.h"
+#include "graph.h"
 
 using namespace std;
 
@@ -27,17 +28,31 @@ int main() {
         cout << endl;
     }*/
 
-    string startCity = "MAD";
-    string endCity = "GUA";
+    displayMenu(cities, "POSSIBLE CITIES");
+    int startCityIndex, endCityIndex;
+    cout << "Enter the number of the starting city: ";
+    cin >> startCityIndex;
+    cout << "Enter the number of the destination city: ";
+    cin >> endCityIndex;
 
+    string startCity = cities[startCityIndex - 1];
+    string endCity = cities[endCityIndex - 1];
 
-    vector<string> route = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
+    vector<string> routeDFS = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
 
-    for (int i = 0; i < route.size(); i++) {
-        cout << route[i] << " "; 
+    for (int i = 0; i < routeDFS.size(); i++) {
+        cout << routeDFS[i] << " ";
     }
     cout << endl;
-    cout << "distance covered: " << getRouteDistance(adjacencyMatrix, route, cityIndex) << endl;
+    cout << "distance covered with DFS: " << getRouteDistance(adjacencyMatrix, routeDFS, cityIndex) << endl;
+
+    vector<string> routeBFS = BFS(cityIndex, adjacencyMatrix, startCity, endCity);
+
+    for (int i = 0; i < routeBFS.size(); i++) {
+        cout << routeBFS[i] << " ";
+    }
+    cout << endl;
+    cout << "distance covered with BFS: " << getRouteDistance(adjacencyMatrix, routeBFS, cityIndex) << endl;
 
     /*for (int i =0; i < routes.size(); i++) {
         for (int j = 0; j < routes[i].size(); j++) {

@@ -128,12 +128,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bfs.cpp" />
     <ClCompile Include="dfs.cpp" />
     <ClCompile Include="extra-funcs.cpp" />
     <ClCompile Include="graph.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bfs.h" />
     <ClInclude Include="dfs.h" />
     <ClInclude Include="extra-funcs.h" />
     <ClInclude Include="graph.h" />
