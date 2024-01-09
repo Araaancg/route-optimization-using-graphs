@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {    
-    vector<string> cities = { "MAD", "CIU", "SAL", "TOL", "ALB", "JAE", "GUA", "CAC" };
+    vector<string> cities = { "MAD", "CIU", "SAL", "JAE", "CAC", "GUA", "TOL", "ALB" };
 
     unordered_map<string, int> cityIndex = mapCitiesWithIndex(cities);
     vector<vector<int>> adjacencyMatrix = createGraph(cityIndex, cities.size());
