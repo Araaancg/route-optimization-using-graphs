@@ -5,71 +5,73 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stack>
+#include <sstream>
 
 #include "dfs.h"
 #include "bfs.h"
 #include "extra-funcs.h"
 #include "graph.h"
-#include "classTravel.h"
-
 
 using namespace std;
 
 int main() {    
-    vector<string> cities = { "MAD", "CIU", "SAL", "JAE", "CAC", "GUA", "TOL", "ALB" };
+    vector<string> cities = { "MAD", "CIU", "SAL", "JAE", "CAC", "GUA", "TOL", "ALB" }; // all possible cities
 
     unordered_map<string, int> cityIndex = mapCitiesWithIndex(cities);
     vector<vector<int>> adjacencyMatrix = createGraph(cityIndex, cities.size());
 
-    // Display the adjacency matrix
-    /*cout << "adjacency matrix:" << endl;
-    for (const auto& row : adjacencyMatrix) {
-        for (int distance : row) {
-            cout << distance << "\t";
-        }
-        cout << endl;
-    }*/
-
+    // USER SELECT CITIES
     displayMenu(cities, "POSSIBLE CITIES");
-    int startCityIndex, endCityIndex;
-    cout << "Enter the number of the starting city: ";
-    cin >> startCityIndex;
-    cout << "Enter the number of the destination city: ";
-    cin >> endCityIndex;
+
+    int startCityIndex = validateUserInput(cities.size());
 
     string startCity = cities[startCityIndex - 1];
+
+    cout << "origin: " << startCity << endl;
+
+    int endCityIndex;
+    do {
+        endCityIndex = validateUserInput(cities.size());
+        if (startCityIndex == endCityIndex) {
+            cout << "Second city must be different from the first one";
+        };
+    } while (startCityIndex == endCityIndex);
+
     string endCity = cities[endCityIndex - 1];
 
-    vector<string> routeDFS = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
-
-    for (int i = 0; i < routeDFS.size(); i++) {
-        cout << routeDFS[i] << " ";
-    }
+    cout << "destination: " << endCity << endl;
     cout << endl;
-    cout << "distance covered with DFS: " << getRouteDistance(adjacencyMatrix, routeDFS, cityIndex) << endl;
+    // CONFIRM IF THERE IS A DIRECT ROUTE
+    if (adjacencyMatrix[cityIndex[startCity]][cityIndex[endCity]] > 0) {
+        // if there is a direct route we finish the programm
+        cout << startCity << " " << endCity << endl;
+        cout << "distance covered: " << adjacencyMatrix[cityIndex[startCity]][cityIndex[endCity]] << endl;
 
-    vector<string> routeBFS = BFS(cityIndex, adjacencyMatrix, startCity, endCity);
-
-    for (int i = 0; i < routeBFS.size(); i++) {
-        cout << routeBFS[i] << " ";
+        return 0;
     }
-    cout << endl;
-    cout << "distance covered with BFS: " << getRouteDistance(adjacencyMatrix, routeBFS, cityIndex) << endl;
+    else { // if there isn't a direct route with use dfs and bfs
+        // APPLY DEEP FIRST SEARCH
+        vector<string> routeDFS = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
 
-    /*for (int i =0; i < routes.size(); i++) {
-        for (int j = 0; j < routes[i].size(); j++) {
-            if (j == routes[i].size() - 1) {
-                cout << routes[i][j];
-            }
-            else {
-                cout << routes[i][j] << " -> ";
-            }
-        };
+        for (int i = 0; i < routeDFS.size(); i++) {
+            cout << routeDFS[i] << " ";
+        }
         cout << endl;
-        cout << "distance covered: " << getRouteDistance(adjacencyMatrix, routes[i], cityIndex) << endl;
-    };*/
+        cout << "distance covered with DFS: " << getRouteDistance(adjacencyMatrix, routeDFS, cityIndex) << endl;
 
-    return 0;
+        // APPLY BREADTH FIRST SEARCH
+        vector<string> routeBFS = BFS(cityIndex, adjacencyMatrix, startCity, endCity);
+
+        for (int i = 0; i < routeBFS.size(); i++) {
+            cout << routeBFS[i] << " ";
+        }
+        cout << endl;
+        cout << "distance covered with BFS: " << getRouteDistance(adjacencyMatrix, routeBFS, cityIndex) << endl;
+
+        return 0;
+
+    };
+
 }
 
 

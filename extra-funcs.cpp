@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <sstream>
+
 
 using namespace std;
 
@@ -15,15 +17,6 @@ int getRouteDistance(const vector<vector<int>>& graph, vector<string> route, uno
 
     return distance;
 };
-
-//void printStack(stack<string> myStack) {
-//    stack<string> copyStack = myStack;
-//    while (!copyStack.empty()) {
-//        cout << copyStack.top() << " ";
-//        copyStack.pop();
-//    };
-//    cout << endl;
-//};
 
 string getKeyFromValue(unordered_map<string, int>& myObj, int value) {
     for (auto& [key, val] : myObj) {
@@ -49,3 +42,31 @@ void displayMenu(const vector<string>& cities, string title) {
         std::cout << i + 1 << ". " << cities[i] << endl;
     }
 }
+
+int validateUserInput(int menuLength) {
+    string userInput;
+    bool valid = false;
+
+    while (!valid) {
+        cout << "> ";
+        cin >> userInput;
+
+        istringstream iss(userInput); // Try to convert the input to an integer
+        int option;
+        if (iss >> option) {
+            if (option >= 1 && option <= menuLength) { // Check if the input is a number within the valid range
+                return option;
+            }
+            else {
+                std::cout << "Invalid input. Please enter a number between 1 and " << menuLength << "." << endl;
+            }
+        }
+        else {
+            std::cout << "Invalid input. Please enter a number." << endl;
+        };
+    };
+};
+
+//bool confirmDirectRoute(unordered_map<string, int>& cityIndex, const string& origin, const string& destination) {
+//    
+//}
