@@ -43,3 +43,4 @@ vector<vector<int>> createGraph(unordered_map<string, int>& cityIndex, int vecto
     graph[cityIndex["JAE"]][cityIndex["SAL"]] = 100;
     return graph;
 }
+

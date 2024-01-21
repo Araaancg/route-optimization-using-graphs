@@ -8,30 +8,27 @@
 using namespace std;
 
 vector<string> BFS(unordered_map<string, int>& cityIndex, const vector<vector<int>>& graph, const string& origin, const string& destination) {
+    
     vector<string> path;
-    queue<vector<string>> myQueue;
+    queue<string> myQueue;
     unordered_set<string> visitedNodes;
-    vector<string> startPath = { origin };
-    myQueue.push(startPath);
-    visitedNodes.insert(origin);
+    myQueue.push(origin);
 
     while (!myQueue.empty()) {
-        vector<string> path = myQueue.front();
+        string node = myQueue.front();
         myQueue.pop();
-        string node = path.back();
-        if (node == destination) {
-            return path;
-        }
-        else {
+
+        if (visitedNodes.find(node) == visitedNodes.end()) {
+            visitedNodes.insert(node);
+            path.push_back(node);
             for (int i = 0; i < graph[cityIndex[node]].size(); i++) {
                 if (graph[cityIndex[node]][i] != 0) {
                     string adjacentNode = getKeyFromValue(cityIndex, i);
-                    if (visitedNodes.find(adjacentNode) == visitedNodes.end()) {
-                        visitedNodes.insert(adjacentNode);
-                        vector<string> newPath = path;
-                        newPath.push_back(adjacentNode);
-                        myQueue.push(newPath);
+                    if (adjacentNode == destination) {
+                        path.push_back(adjacentNode);
+                        return path;
                     };
+                    myQueue.push(adjacentNode);
                 };
             };
         };

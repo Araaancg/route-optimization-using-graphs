@@ -10,6 +10,8 @@
 #include "bfs.h"
 #include "extra-funcs.h"
 #include "graph.h"
+#include "classTravel.h"
+
 
 using namespace std;
 
