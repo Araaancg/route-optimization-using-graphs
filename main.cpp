@@ -59,6 +59,8 @@ int main() {
         cout << endl;
         cout << "distance covered with DFS: " << getRouteDistance(adjacencyMatrix, routeDFS, cityIndex) << endl;
 
+        cout << endl;
+
         // APPLY BREADTH FIRST SEARCH
         vector<string> routeBFS = BFS(cityIndex, adjacencyMatrix, startCity, endCity);
 
