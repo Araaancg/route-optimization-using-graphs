@@ -7,18 +7,19 @@
 #include <stack>
 #include <sstream>
 
-#include "dfs.h"
-#include "bfs.h"
-#include "extra-funcs.h"
-#include "graph.h"
+#include "./headers/extra-funcs.h"
+#include "./headers/graph.h"
+#include "./headers/classRoute.h"
 
 using namespace std;
 
-int main() {    
-    vector<string> cities = { "MAD", "CIU", "SAL", "JAE", "CAC", "GUA", "TOL", "ALB" }; // all possible cities
+int main() {
+    vector<string> cities = { "Madrid", "Ciudad Real", "Salamanca", "Jaén", "Cáceres", "Guadalajara", "Toledo", "Albacete" }; // all possible cities
 
-    unordered_map<string, int> cityIndex = mapCitiesWithIndex(cities);
-    vector<vector<int>> adjacencyMatrix = createGraph(cityIndex, cities.size());
+    vector<Route> graph;
+    loadRoutes(&graph);
+
+    cout << graph[0].origin << endl;
 
     // USER SELECT CITIES
     displayMenu(cities, "POSSIBLE CITIES");
@@ -41,37 +42,8 @@ int main() {
 
     cout << "destination: " << endCity << endl;
     cout << endl;
-    // CONFIRM IF THERE IS A DIRECT ROUTE
-    if (adjacencyMatrix[cityIndex[startCity]][cityIndex[endCity]] > 0) {
-        // if there is a direct route we finish the programm
-        cout << startCity << " " << endCity << endl;
-        cout << "distance covered: " << adjacencyMatrix[cityIndex[startCity]][cityIndex[endCity]] << endl;
 
-        return 0;
-    }
-    else { // if there isn't a direct route with use dfs and bfs
-        // APPLY DEEP FIRST SEARCH
-        vector<string> routeDFS = DFS(cityIndex, adjacencyMatrix, startCity, endCity);
-
-        for (int i = 0; i < routeDFS.size(); i++) {
-            cout << routeDFS[i] << " ";
-        }
-        cout << endl;
-        cout << "distance covered with DFS: " << getRouteDistance(adjacencyMatrix, routeDFS, cityIndex) << endl;
-
-        // APPLY BREADTH FIRST SEARCH
-        vector<string> routeBFS = BFS(cityIndex, adjacencyMatrix, startCity, endCity);
-
-        for (int i = 0; i < routeBFS.size(); i++) {
-            cout << routeBFS[i] << " ";
-        }
-        cout << endl;
-        cout << "distance covered with BFS: " << getRouteDistance(adjacencyMatrix, routeBFS, cityIndex) << endl;
-
-        return 0;
-
-    };
-
-}
+    return 0;
+};
 
 
