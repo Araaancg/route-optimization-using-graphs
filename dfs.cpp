@@ -3,7 +3,7 @@
 #include <string>
 #include <stack>
 
-#include "extra-funcs.h"
+#include "./headers/extra-funcs.h"
 
 using namespace std;
 
