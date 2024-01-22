@@ -7,10 +7,10 @@
 #include <stack>
 #include <sstream>
 
-#include "./headers/dfs.h"
-#include "./headers/bfs.h"
-#include "./headers/extra-funcs.h"
-#include "./headers/graph.h"
+#include "dfs.h"
+#include "bfs.h"
+#include "extra-funcs.h"
+#include "graph.h"
 
 using namespace std;
 

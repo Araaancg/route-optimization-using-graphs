@@ -66,7 +66,3 @@ int validateUserInput(int menuLength) {
         };
     };
 };
-
-//bool confirmDirectRoute(unordered_map<string, int>& cityIndex, const string& origin, const string& destination) {
-//    
-//}

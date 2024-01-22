@@ -3,7 +3,7 @@
 #include <string>
 #include <queue>
 
-#include "./headers/extra-funcs.h"
+#include "extra-funcs.h"
 
 using namespace std;
 

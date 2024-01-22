@@ -140,6 +140,12 @@
     <ClInclude Include="extra-funcs.h" />
     <ClInclude Include="graph.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakePresets.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
