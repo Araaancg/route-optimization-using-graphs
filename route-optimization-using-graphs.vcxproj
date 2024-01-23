@@ -136,7 +136,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bfs.h" />
-    <ClInclude Include="classRoute.h" />
     <ClInclude Include="dfs.h" />
     <ClInclude Include="extra-funcs.h" />
     <ClInclude Include="graph.h" />

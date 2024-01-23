@@ -1,26 +1,21 @@
-#include <iostream>
-#include <vector>
-#include <unordered_map>
 #include <unordered_set>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stack>
 #include <sstream>
 
-#include "./headers/dfs.h"
-#include "./headers/bfs.h"
-#include "./headers/extra-funcs.h"
-#include "./headers/graph.h"
+#include "dfs.h"
+#include "bfs.h"
+#include "extra-funcs.h"
+#include "graph.h"
 
 using namespace std;
 
 int main() {
-    vector<string> cities = { "Madrid", "Ciudad Real", "Salamanca", "Jaén", "Cáceres", "Guadalajara", "Toledo", "Albacete" }; // all possible cities
+    vector<string> cities = { "MAD", "CIU", "SAL", "JAE", "CAC", "GUA", "TOL", "ALB" }; // all possible cities
 
-    vector<Route> graph;
-    loadRoutes(&graph);
-
-    cout << graph[0].origin << endl;
+    unordered_map<string, int> cityIndex = mapCitiesWithIndex(cities);
+    vector<vector<int>> adjacencyMatrix = createGraph(cityIndex, cities.size());
 
     // USER SELECT CITIES
     displayMenu(cities, "POSSIBLE CITIES");
@@ -72,7 +67,10 @@ int main() {
         cout << endl;
         cout << "distance covered with BFS: " << getRouteDistance(adjacencyMatrix, routeBFS, cityIndex) << endl;
 
-    return 0;
-};
+        return 0;
+
+    };
+
+}
 
 
