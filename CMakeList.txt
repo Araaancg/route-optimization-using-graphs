@@ -1,0 +1,44 @@
+
+cmake_minimum_required(VERSION 3.10) 
+
+project(route-optimization-using-graphs)
+
+# Set C++ standard (C++11, C++14, C++17, etc.)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+# Add source files to a variable
+set(SOURCES
+    main.cpp
+    bfs.cpp
+    dfs.cpp
+    extra-funcs.cpp
+    graph.cpp
+    bfs.h
+    dfs.h
+    extra-funcs.h
+    graph.h
+)
+
+# Specify the include directories
+include_directories(include)
+
+# Add executable (console application)
+add_executable(MyExecutable ${SOURCES})
+
+# Add WIN32 if it is a Windows application
+# add_executable(MyExecutable WIN32 ${SOURCES})
+
+# Create source groups for better organization in Visual Studio
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
+
+# Custom targets or commands can be added here
+# add_custom_command(TARGET MyExecutable POST_BUILD COMMAND custom_command)
+
+# Custom targets (Utility Targets) in Visual Studio
+# add_custom_target(MyUtilityTarget COMMAND utility_command)
+
+# Optionally, you can add subdirectories for better organization
+# add_subdirectory(subdirectory)
+
+  
