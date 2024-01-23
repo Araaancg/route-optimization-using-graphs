@@ -20,25 +20,12 @@ set(SOURCES
     graph.h
 )
 
-# Specify the include directories
-include_directories(include)
+add_executable(route-optimization-using-graphs ${SOURCES})
 
-# Add executable (console application)
-add_executable(MyExecutable ${SOURCES})
+#Debug/Release
 
-# Add WIN32 if it is a Windows application
-# add_executable(MyExecutable WIN32 ${SOURCES})
+set(CMAKE_BUILD_TYPE Debug)
 
-# Create source groups for better organization in Visual Studio
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCES})
-
-# Custom targets or commands can be added here
-# add_custom_command(TARGET MyExecutable POST_BUILD COMMAND custom_command)
-
-# Custom targets (Utility Targets) in Visual Studio
-# add_custom_target(MyUtilityTarget COMMAND utility_command)
-
-# Optionally, you can add subdirectories for better organization
-# add_subdirectory(subdirectory)
-
+set(CMAKE_CXX_FLAGS "-O2 -g -Wall -W -march=native -msse3")
+set(CMAKE_CXX_FLAGS_DEBUG " -O0 -ggdb3 -DDEBUG ")
   
