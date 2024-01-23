@@ -7,18 +7,19 @@
 #include <stack>
 #include <sstream>
 
-#include "dfs.h"
-#include "bfs.h"
-#include "extra-funcs.h"
-#include "graph.h"
+#include "./headers/extra-funcs.h"
+#include "./headers/graph.h"
+#include "./headers/classRoute.h"
 
 using namespace std;
 
-int main() {    
-    vector<string> cities = { "MAD", "CIU", "SAL", "JAE", "CAC", "GUA", "TOL", "ALB" }; // all possible cities
+int main() {
+    vector<string> cities = { "Madrid", "Ciudad Real", "Salamanca", "Jaén", "Cáceres", "Guadalajara", "Toledo", "Albacete" }; // all possible cities
 
-    unordered_map<string, int> cityIndex = mapCitiesWithIndex(cities);
-    vector<vector<int>> adjacencyMatrix = createGraph(cityIndex, cities.size());
+    vector<Route> graph;
+    loadRoutes(&graph);
+
+    cout << graph[0].origin << endl;
 
     // USER SELECT CITIES
     displayMenu(cities, "POSSIBLE CITIES");
@@ -70,10 +71,7 @@ int main() {
         cout << endl;
         cout << "distance covered with BFS: " << getRouteDistance(adjacencyMatrix, routeBFS, cityIndex) << endl;
 
-        return 0;
-
-    };
-
-}
+    return 0;
+};
 
 
