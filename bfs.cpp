@@ -1,23 +1,23 @@
 #include <vector>
 #include <unordered_map>
 #include <string>
-#include <stack>
+#include <queue>
 
 #include "./headers/extra-funcs.h"
 
 using namespace std;
 
-vector<string> DFS(unordered_map<string, int>& cityIndex, const vector<vector<int>>& graph, const string& origin, const string& destination) {
-
-    unordered_set<string> visitedNodes;
-    stack<string> myStack;
+vector<string> BFS(unordered_map<string, int>& cityIndex, const vector<vector<int>>& graph, const string& origin, const string& destination) {
+    
     vector<string> path;
+    queue<string> myQueue;
+    unordered_set<string> visitedNodes;
+    myQueue.push(origin);
 
-    myStack.push(origin);
+    while (!myQueue.empty()) {
+        string node = myQueue.front();
+        myQueue.pop();
 
-    while (!myStack.empty()) {
-        string node = myStack.top();
-        myStack.pop();
         if (visitedNodes.find(node) == visitedNodes.end()) {
             visitedNodes.insert(node);
             path.push_back(node);
@@ -28,7 +28,7 @@ vector<string> DFS(unordered_map<string, int>& cityIndex, const vector<vector<in
                         path.push_back(adjacentNode);
                         return path;
                     };
-                    myStack.push(adjacentNode);
+                    myQueue.push(adjacentNode);
                 };
             };
         };

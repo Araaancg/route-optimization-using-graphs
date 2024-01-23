@@ -7,9 +7,10 @@
 #include <stack>
 #include <sstream>
 
+#include "./headers/dfs.h"
+#include "./headers/bfs.h"
 #include "./headers/extra-funcs.h"
 #include "./headers/graph.h"
-#include "./headers/classRoute.h"
 
 using namespace std;
 
