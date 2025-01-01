@@ -1,5 +1,7 @@
 # Route Optimization Using Graphs in C++
 
+This project was done as a final project in MSMK University for Unit 20 - Applied Programming and Design Principles. The final mark was Distinction.
+
 ## Overview
 
 This project implements two fundamental graph traversal algorithms: **Depth-First Search (DFS)** and **Breadth-First Search (BFS)**, using **C++**. Given a graph, the goal is to simulate the exploration of its nodes through these two algorithms and determine which will give us the faster option.
