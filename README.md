@@ -1,6 +1,6 @@
 # Route Optimization Using Graphs in C++
 
-This project was done as a final project in MSMK University for Unit 20 - Applied Programming and Design Principles. The final mark was Distinction.
+This repository corresponds to a final project for MSMK University Unit 20 - Advanced Programming and Design Principles in the Applied Computing and AI Professional Degree. The final grade was 'Distinction'.
 
 ## Overview
 
